@@ -2,13 +2,10 @@ package com.innowise.cadenseapp.controller;
 
 import com.innowise.cadenseapp.dto.WorkflowResponse;
 import com.innowise.cadenseapp.workflow.WeatherWorkflow;
-import com.uber.cadence.BadRequestError;
 import com.uber.cadence.WorkflowExecution;
 import com.uber.cadence.client.WorkflowClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/workflow/weather")
@@ -24,13 +21,7 @@ public class WeatherController {
     public ResponseEntity<WorkflowResponse> startWorkflow(@PathVariable("city") String city) {
 
         WeatherWorkflow workflow = workflowClient.newWorkflowStub(WeatherWorkflow.class);
-        WorkflowExecution execution = WorkflowClient.start(() -> {
-            try {
-                workflow.getAndStoreWeather(city);
-            } catch (IOException | BadRequestError e) {
-                throw new RuntimeException(e);
-            }
-        });
+        WorkflowExecution execution = WorkflowClient.start(() -> workflow.getAndStoreWeather(city));
         WorkflowResponse responseBody = WorkflowResponse.success(execution.getWorkflowId());
 
         return ResponseEntity.ok(responseBody);

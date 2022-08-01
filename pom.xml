@@ -64,11 +64,6 @@
             <artifactId>flyway-core</artifactId>
             <version>8.5.13</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.6.1</version>
-        </dependency>
     </dependencies>
 
     <build>
