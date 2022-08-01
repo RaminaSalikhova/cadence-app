@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CadenceConfiguration {
 
-    static final String DOMAIN = "test-domain";
+    static String DOMAIN="weather-domain";
 
     @Bean
     public WorkflowClientOptions workflowClientOptions() {
@@ -35,7 +35,7 @@ public class CadenceConfiguration {
     @ConditionalOnMissingBean(ClientOptions.class)
     public ClientOptions cadenceClientOptions() {
         return ClientOptions.newBuilder()
-                .setClientAppName("testApp")
+                .setClientAppName("weatherApp")
                 .setHost("localhost")
                 .setPort(7933)
                 .build();

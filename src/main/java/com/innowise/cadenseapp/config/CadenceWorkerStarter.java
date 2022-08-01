@@ -21,8 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
 
-import static com.innowise.cadenseapp.config.CadenceConfiguration.DOMAIN;
-
 @Component
 @Slf4j
 public class CadenceWorkerStarter {
@@ -59,13 +57,13 @@ public class CadenceWorkerStarter {
 
     private void registerDomain() throws TException {
         RegisterDomainRequest request = new RegisterDomainRequest();
-        request.setDescription(DOMAIN);
+        request.setDescription(CadenceConfiguration.DOMAIN);
         request.setEmitMetric(false);
-        request.setName(DOMAIN);
+        request.setName(CadenceConfiguration.DOMAIN);
         request.setWorkflowExecutionRetentionPeriodInDays(2);
 
         workflowService.RegisterDomain(request);
-        log.info("Successfully registered domain \"{}\"", DOMAIN);
+        log.info("Successfully registered domain \"{}\"", CadenceConfiguration.DOMAIN);
     }
 
     private void createWorkers() {
@@ -82,11 +80,11 @@ public class CadenceWorkerStarter {
             List<DescribeDomainResponse> domains = response.getDomains();
 
             return domains.stream()
-                    .anyMatch(d -> d.domainInfo.name.equals(DOMAIN));
+                    .anyMatch(d -> d.domainInfo.name.equals(CadenceConfiguration.DOMAIN));
         } catch (UnsupportedOperationException e) {
             log.warn("Listing or registering domains is not supported when using a local embedded test server, " +
                     "these steps will be skipped");
-            return true; // evaluate as true so domain won't be registered.
+            return true;
         }
     }
 }

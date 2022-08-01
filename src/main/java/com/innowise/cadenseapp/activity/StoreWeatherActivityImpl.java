@@ -7,6 +7,8 @@ import com.innowise.cadenseapp.entity.Weather;
 import com.innowise.cadenseapp.service.WeatherService;
 import org.springframework.context.ApplicationContext;
 
+import java.util.List;
+
 public class StoreWeatherActivityImpl implements StoreWeatherActivity {
 
     @Override
