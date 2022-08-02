@@ -21,7 +21,7 @@ public class WeatherController {
     public ResponseEntity<WorkflowResponse> startWorkflow(@PathVariable("city") String city) {
 
         WeatherWorkflow workflow = workflowClient.newWorkflowStub(WeatherWorkflow.class);
-        WorkflowExecution execution = WorkflowClient.start(() -> workflow.getAndStoreWeather(city));
+        WorkflowExecution execution = WorkflowClient.start(workflow::getAndStoreWeather, city);
         WorkflowResponse responseBody = WorkflowResponse.success(execution.getWorkflowId());
 
         return ResponseEntity.ok(responseBody);
